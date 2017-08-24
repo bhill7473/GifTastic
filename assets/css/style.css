@@ -1,0 +1,59 @@
+body{
+
+	background:yellow;
+}
+button{
+	color:white;
+	background:teal;
+	border-radius:25px;
+	border:2px solid white;
+	width:100px;
+	height:70px;
+	font-weight:bold;
+	font-size:100%;
+	font-family:Lucida;
+	margin-left:10px;
+	margin-top:10px;
+	margin-bottom:10px;
+
+}
+h1{
+	text-align:center;
+	color:teal;
+	font-weight:bold;
+	font-size:200%;
+	font-family:Lucida;
+	padding-top:30px;
+}
+#panel{
+    background:black;
+	width:40%;
+	height:100px;
+	border-radius:25px;
+	border: 2px solid teal;
+	margin-left:30%;
+	padding-bottom:30px;
+}
+button:hover{
+	background:green;
+	cursor:pointer;
+}
+#gifs-appear-here{
+	position:static;
+}
+#addInput{
+	width:200px;
+	height:200px;
+	border-radius:25px;
+	border: 2px solid white;
+	padding-left:10px;
+	padding-bottom:10px;
+	background:teal;
+	float:right;
+	margin-right:100px;
+}
+#addInput h5{
+	color:white;
+	font-family:Lucida;
+	font-size:150%;
+}

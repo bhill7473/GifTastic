@@ -1,0 +1,100 @@
+<!Doctype html>
+<head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="assets/js/gif.js"></script>
+ <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+ <title>GifTastic</title>
+</head>
+
+<body>
+<div id="panel"><h1>GifTastic!</h1></div>
+<br><br>
+<div id="buttons-view"></div>
+
+
+<br><br>
+<div id="addInput">
+<form id="topic-form">
+      <label for="topic-input"><h5> Add a Topic of Your Choice!</h5> </label>
+      <input type="text" id="topic-input">
+      <br><br>
+      <input id="add-topic" type="submit" value="Add a Topic!">
+    </form>
+    </div>
+    <br><br>
+    
+<div id="gifs-appear-here"></div>
+<script>
+var topics = ["asteroids","planets","robots","space","ocean","mountains","grass","tree","fish","sharks","fire","beach",
+"sun","earth","pool","stars","wind","football"];
+
+// animate on click, align pictures in static order fix input search
+ $(document).on("click", ".gifImage", function() {
+   var state = $("img").attr("data-still");
+if(state == $(this).attr("data-still")){
+    $(this).attr("src", fixed_height.url);
+  }
+  else{
+    $(this).attr("src", fixed_height_still.url);
+  }              
+
+         
+ }); 
+ function renderButtons() {
+    
+        $("#buttons-view").empty();
+        for (var i = 0; i < topics.length; i++) {
+          var a = $("<button>");
+          a.addClass("gif");
+          a.attr("data-gif", topics[i]);
+          a.text(topics[i]);
+          $("#buttons-view").append(a);
+        }
+      }
+
+  $("#add-topic").on("click", function(event) {
+        event.preventDefault();
+        var topic = $("#topic-input").val().trim();
+        topics.push(topic);
+        renderButtons();             
+      
+     
+ 
+   $(".gif",).on("click", function() {
+   $("#gifs-appear-here").empty();
+      var topic = $(this).attr("data-gif");
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        topic + "&api_key=dc6zaTOxFJmzC&limit=10";
+      $.ajax({
+          url: queryURL,
+          method: "GET"
+        })
+        .done(function(response) {
+          var results = response.data;
+          for (var i = 0; i < results.length; i++) {
+            var gifDiv = $("<div class='item'>");
+            var rating = results[i].rating;
+            var p = $("<p>").text("Rating: " + rating);
+            var topicImage = $("<img>");
+            $("img").attr("data-still");
+            topicImage.addClass("gifImage");
+            topicImage.attr("src", results[i].images.fixed_height_still.url);
+            gifDiv.prepend(p);
+            gifDiv.prepend(topicImage);
+            $("#gifs-appear-here").prepend(gifDiv);
+ 
+
+
+           }
+          
+ 
+         });
+       });
+    });
+
+
+    renderButtons();
+</script>
+
+</body>
