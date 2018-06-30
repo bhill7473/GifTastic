@@ -1,17 +1,21 @@
+$(document).ready(function(){
+
 
 var topics = ["asteroids","planets","robots","space","ocean","mountains","grass","tree","fish","sharks","fire","beach",
 "sun","earth","pool","stars","wind","football"];
 
 // animate on click, align pictures in static order fix input search
- $(document).on("click", ".gifImage", function() {
-   var state = $("img").attr("data-still");
+ $(document).on("click", ".topic-image", function() {
+  var state = $(this).attr("data-state");
 
-if(state == $(this).attr("data-still")){
-    $(this).attr("src", results[i].images.fixed_height.url);
+  if (state === "still") {
+    $(this).attr("src", $(this).attr("data-animate"));
+    $(this).attr("data-state", "animate");
   }
-  else{
-    $(this).attr("src", results[i].images.fixed_height_still.url);
-  }  
+  else {
+    $(this).attr("src", $(this).attr("data-still"));
+    $(this).attr("data-state", "still");
+  }
 
          });  
 
@@ -31,11 +35,12 @@ if(state == $(this).attr("data-still")){
         event.preventDefault();
         var topic = $("#topic-input").val().trim();
         topics.push(topic);
-        renderButtons();             
+        renderButtons();    
+        $("#topic-input").val("");        
       
      
- 
-   $(".gif",).on("click", function() {
+  });
+   $(document).on("click",".gif", function() {
  	 $("#gifs-appear-here").empty();
       var topic = $(this).attr("data-gif");
       var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -50,10 +55,14 @@ if(state == $(this).attr("data-still")){
             var gifDiv = $("<div class='item'>");
             var rating = results[i].rating;
             var p = $("<p>").text("Rating: " + rating);
+            var animated = results[i].images.fixed_height.url;
+            var still = results[i].images.fixed_height_still.url;
             var topicImage = $("<img>");
-            $("img").attr("data-still");
-            topicImage.addClass("gifImage");
-            topicImage.attr("src", results[i].images.fixed_height_still.url);
+            topicImage.attr("src", still);
+            topicImage.attr("data-still", still);
+            topicImage.attr("data-animate", animated);
+            topicImage.attr("data-state", "still");
+            topicImage.addClass("topic-image");
             gifDiv.prepend(p);
             gifDiv.prepend(topicImage);
             $("#gifs-appear-here").prepend(gifDiv);
@@ -63,8 +72,10 @@ if(state == $(this).attr("data-still")){
  
          });
        });
+       renderButtons();
     });
 
 
-    renderButtons();
 
+
+  
